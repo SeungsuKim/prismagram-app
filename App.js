@@ -18,6 +18,7 @@ import { AuthProvider } from "./AuthContext";
 export default function App() {
   const [loaded, setLoaded] = useState(false);
   const [client, setClient] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
 
   useEffect(() => {
     preLoad();
@@ -42,6 +43,9 @@ export default function App() {
         ...apolloClientOptions
       });
 
+      const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
+
+      setIsLoggedIn(isLoggedIn === "true");
       setLoaded(true);
       setClient(client);
     } catch (error) {
@@ -49,10 +53,10 @@ export default function App() {
     }
   };
 
-  return loaded && client ? (
+  return loaded && client && isLoggedIn !== null ? (
     <ApolloProvider client={client}>
       <ThemeProvider theme={styles}>
-        <AuthProvider>
+        <AuthProvider isLoggedIn={isLoggedIn}>
           <NavController />
         </AuthProvider>
       </ThemeProvider>
