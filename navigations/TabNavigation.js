@@ -1,4 +1,3 @@
-import { createAppContainer } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { View } from "react-native";
 
@@ -13,13 +12,11 @@ const TabNavigation = createBottomTabNavigator({
   Add: {
     screen: View,
     navigationOptions: {
-      tabBarOnPress: () => {
-        console.log("Add");
-      }
+      tabBarOnPress: ({ navigation }) => navigation.navigate("PhotoNavigation")
     }
   },
   Notifications,
   Profile
 });
 
-export default createAppContainer(TabNavigation);
+export default TabNavigation;
