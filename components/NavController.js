@@ -1,14 +1,16 @@
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-import { useIsLoggedIn, useLogIn, useLogOut } from "../AuthContext";
+import { View } from "react-native";
+import { useIsLoggedIn } from "../AuthContext";
 import AuthNavigation from "../navigations/AuthNavigation";
+import TabNavigation from "../navigations/TabNavigation";
 
 export default () => {
-  const isLoggedIn = useIsLoggedIn();
+  // const isLoggedIn = useIsLoggedIn();
+  const isLoggedIn = true;
 
   return (
     <View style={{ flex: 1 }}>
-      {isLoggedIn ? <Text>Log Out</Text> : <AuthNavigation />}
+      {isLoggedIn ? <TabNavigation /> : <AuthNavigation />}
     </View>
   );
 };
