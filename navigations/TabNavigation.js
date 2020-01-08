@@ -1,22 +1,23 @@
-import { createBottomTabNavigator } from "react-navigation-tabs";
 import { View } from "react-native";
+import { createStackNavigator } from "react-navigation-stack";
+import { createBottomTabNavigator } from "react-navigation-tabs";
 
-import Home from "../screens/Home";
-import Search from "../screens/Search";
-import Notifications from "../screens/Notifications";
-import Profile from "../screens/Profile";
+import Home from "../screens/Tabs/Home";
+import Search from "../screens/Tabs/Search";
+import Notifications from "../screens/Tabs/Notifications";
+import Profile from "../screens/Tabs/Profile";
 
-const TabNavigation = createBottomTabNavigator({
-  Home,
-  Search,
+export default createBottomTabNavigator({
+  Home: {
+    screen: createStackNavigator({ Home })
+  },
+  Search: createStackNavigator({ Search }),
   Add: {
     screen: View,
     navigationOptions: {
       tabBarOnPress: ({ navigation }) => navigation.navigate("PhotoNavigation")
     }
   },
-  Notifications,
-  Profile
+  Notifications: createStackNavigator({ Notifications }),
+  Profile: createStackNavigator({ Profile })
 });
-
-export default TabNavigation;
