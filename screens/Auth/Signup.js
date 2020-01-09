@@ -1,3 +1,4 @@
+import * as Facebook from "expo-facebook";
 import React, { useState } from "react";
 import { useMutation } from "react-apollo-hooks";
 import { Alert, Keyboard, TouchableWithoutFeedback } from "react-native";
@@ -35,6 +36,10 @@ const DividerContainer = styled.View`
   display: flex;
   justify-content: center;
   margin: 40px 20px;
+`;
+
+const FBContainer = styled.View`
+  margin-top: 30px;
 `;
 
 export default ({ navigation }) => {
@@ -97,6 +102,26 @@ export default ({ navigation }) => {
     return;
   };
 
+  const fbLogin = async () => {
+    try {
+      const { type, token } = await Facebook.logInWithReadPermissionsAsync(
+        "828915807569753",
+        {
+          permissions: ["public_profile"]
+        }
+      );
+
+      if (type === "success") {
+        const response = await fetch(
+          `https://graph.facebook.com/me?access_token=${token}`
+        );
+        Alert.alert((await response.json()).name);
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View>
@@ -135,6 +160,9 @@ export default ({ navigation }) => {
             loading={loading}
             style={{ "margin-top": "10px" }}
           />
+          <FBContainer>
+            <TextLink text="Continue with Facebook" onPress={fbLogin} />
+          </FBContainer>
           <DividerContainer>
             <Divider orientation="center" color={theme.darkGreyColor}>
               or
