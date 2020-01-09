@@ -23,7 +23,8 @@ const AuthInput = ({
   keyboardType = "default",
   autoCapitalize = "none",
   returnKeyType = "done",
-  autoCorrect = false
+  autoCorrect = false,
+  disabled = false
 }) => (
   <Container>
     <TextInput
@@ -35,6 +36,8 @@ const AuthInput = ({
       autoCapitalize={autoCapitalize}
       returnKeyType={returnKeyType}
       autoCorrect={autoCorrect}
+      editable={!disabled}
+      selectTextOnFocus={!disabled}
     />
   </Container>
 );
@@ -53,7 +56,8 @@ AuthInput.propTypes = {
   ]),
   autoCapitalize: PropTypes.oneOf(["one", "sentences", "words", "characters"]),
   returnKeyType: PropTypes.oneOf(["go", "next", "search", "send", "done"]),
-  autoCorrect: PropTypes.bool
+  autoCorrect: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 export default AuthInput;

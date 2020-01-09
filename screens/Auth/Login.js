@@ -18,7 +18,7 @@ const View = styled.View`
 export default ({ navigation }) => {
   const emailInput = useInput("");
   const [loading, setLoading] = useState(false);
-  const requestSecret = useMutation(LOG_IN, {
+  const [requestSecretMutation] = useMutation(LOG_IN, {
     variables: { email: emailInput.value }
   });
 
@@ -33,9 +33,14 @@ export default ({ navigation }) => {
     setLoading(true);
 
     try {
-      await requestSecret();
-      Alert.alert("Cheked your email");
-      navigation.navigate("Confirm");
+      const {
+        data: { requestSecret }
+      } = await requestSecretMutation();
+      if (requestSecret) {
+        navigation.navigate("Confirm");
+      } else {
+        Alert.alert("Account not found");
+      }
     } catch (error) {
       console.log(error);
       Alert.alert("Cannot log in now");
@@ -52,6 +57,7 @@ export default ({ navigation }) => {
           placeholder={"Email"}
           keyboardType={"email-address"}
           onSubmitEditing={handleLogin}
+          disabled={loading}
         />
         <AuthButton text="Log In" onPress={handleLogin} loading={loading} />
       </View>
