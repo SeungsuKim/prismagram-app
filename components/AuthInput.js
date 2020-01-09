@@ -19,16 +19,22 @@ const AuthInput = ({
   placeholder,
   value,
   onChage,
+  onSubmitEditing,
   keyboardType = "default",
-  autoCapitalize = "none"
+  autoCapitalize = "none",
+  returnKeyType = "done",
+  autoCorrect = false
 }) => (
   <Container>
     <TextInput
       placeholder={placeholder}
       value={value}
       onChangeText={onChage}
+      onSubmitEditing={onSubmitEditing}
       keyboardType={keyboardType}
       autoCapitalize={autoCapitalize}
+      returnKeyType={returnKeyType}
+      autoCorrect={autoCorrect}
     />
   </Container>
 );
@@ -37,6 +43,7 @@ AuthInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChage: PropTypes.func.isRequired,
+  onSubmitEditing: PropTypes.func,
   keyboardType: PropTypes.oneOf([
     "default",
     "number-pad",
@@ -44,7 +51,9 @@ AuthInput.propTypes = {
     "numeric",
     "email-address"
   ]),
-  autoCapitalize: PropTypes.oneOf(["one", "sentences", "words", "characters"])
+  autoCapitalize: PropTypes.oneOf(["one", "sentences", "words", "characters"]),
+  returnKeyType: PropTypes.oneOf(["go", "next", "search", "send", "done"]),
+  autoCorrect: PropTypes.bool
 };
 
 export default AuthInput;
