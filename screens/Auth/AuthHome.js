@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import AutoHeightImage from "react-native-auto-height-image";
 import constants from "../../constants";
+import AuthButton from "../../components/AuthButton";
 
 const View = styled.View`
   flex: 1;
@@ -16,21 +17,9 @@ const Image = styled(AutoHeightImage)`
 
 const Touchable = styled.TouchableOpacity``;
 
-const SignUpButton = styled.View`
-  background-color: ${props => props.theme.blueColor};
-  padding: 10px;
-  width: ${constants.width / 2};
-  border-radius: 4px;
-  margin-bottom: 25px;
+const LoginLink = styled.View`
+  margin-top: 25px;
 `;
-
-const SignUpButtonText = styled.Text`
-  color: white;
-  text-align: center;
-  font-weight: 600;
-`;
-
-const LoginLink = styled.View``;
 
 const LoginLinkText = styled.Text`
   color: ${props => props.theme.blueColor};
@@ -44,11 +33,10 @@ export default ({ navigation }) => (
       width={constants.width / 2}
       source={require("../../assets/cursive-logo.png")}
     />
-    <Touchable onPress={() => navigation.navigate("Signup")}>
-      <SignUpButton>
-        <SignUpButtonText>Create New Account</SignUpButtonText>
-      </SignUpButton>
-    </Touchable>
+    <AuthButton
+      text={"Create New Account"}
+      onPress={() => navigation.navigate("Signup")}
+    ></AuthButton>
     <Touchable onPress={() => navigation.navigate("Login")}>
       <LoginLink>
         <LoginLinkText>Do you have an account?</LoginLinkText>
