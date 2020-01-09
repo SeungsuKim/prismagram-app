@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { Ionicons } from "@expo/vector-icons";
-import { AppLoading } from "expo";
 import * as Font from "expo-font";
-import { Asset } from "expo-asset";
-import { AsyncStorage } from "react-native";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { persistCache } from "apollo-cache-persist";
+
+import React, { useEffect, useState } from "react";
+
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo-hooks";
-import { ThemeProvider } from "styled-components";
-
-import apolloClientOptions from "./Apollo";
-import styles from "./Styles";
-import NavController from "./components/NavController";
+import { AppLoading } from "expo";
+import { Asset } from "expo-asset";
+import { AsyncStorage } from "react-native";
 import { AuthProvider } from "./AuthContext";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { Ionicons } from "@expo/vector-icons";
+import NavController from "./components/NavController";
+import { ThemeProvider } from "styled-components";
+import apolloClientOptions from "./Apollo";
+import { persistCache } from "apollo-cache-persist";
+import styles from "./Styles";
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
@@ -25,6 +26,7 @@ export default function App() {
   }, []);
 
   const preLoad = async () => {
+    await AsyncStorage.clear();
     try {
       await Font.loadAsync({
         ...Ionicons.font

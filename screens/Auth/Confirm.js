@@ -1,20 +1,41 @@
-import { Alert, Keyboard, TouchableWithoutFeedback } from "react-native";
 import React, { useState } from "react";
-import { useLogIn, useLogin } from "../../AuthContext";
+import { useMutation } from "react-apollo-hooks";
+import { Alert, Keyboard, TouchableWithoutFeedback } from "react-native";
+import AutoHeightImage from "react-native-auto-height-image";
+import Divider from "react-native-divider";
+import styled from "styled-components";
 
+import theme from ".././../Styles";
+import { useLogIn } from "../../AuthContext";
 import AuthButton from "../../components/AuthButton";
 import AuthInput from "../../components/AuthInput";
-import { CONFIRM_SECRET } from "../../queries/AuthQueries";
 import TextLink from "../../components/TextLink";
-import styled from "styled-components";
+import constants from "../../constants";
 import useInput from "../../hooks/useInput";
-import { useMutation } from "react-apollo-hooks";
+import { CONFIRM_SECRET } from "../../queries/AuthQueries";
 
 const View = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
   background-color: white;
+`;
+
+const Image = styled(AutoHeightImage)`
+  margin-bottom: 30px;
+`;
+
+const Controls = styled.View`
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+`;
+
+const DividerContainer = styled.View`
+  display: flex;
+  justify-content: center;
+  margin: 40px 20px;
 `;
 
 export default ({ navigation }) => {
@@ -57,18 +78,33 @@ export default ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View>
-        <AuthInput
-          {...confirmInput}
-          placeholder={"Secret"}
-          onSubmitEditing={handleConfirm}
-          disabled={loading}
+        <Image
+          width={constants.width / 2}
+          source={require("../../assets/cursive-logo.png")}
         />
-        <AuthButton text="Confirm" onPress={handleConfirm} loading={loading} />
-        <TextLink
-          text="Don't have an account?"
-          onPress={() => navigation.navigate("Signup")}
-          style={{ "margin-top": "25px" }}
-        />
+        <Controls>
+          <AuthInput
+            {...confirmInput}
+            placeholder={"Secret"}
+            onSubmitEditing={handleConfirm}
+            disabled={loading}
+          />
+          <AuthButton
+            text="Confirm"
+            onPress={handleConfirm}
+            loading={loading}
+            style={{ "margin-top": "10px" }}
+          />
+          <DividerContainer>
+            <Divider orientation="center" color={theme.darkGreyColor}>
+              or
+            </Divider>
+          </DividerContainer>
+          <TextLink
+            text="Don't have an account?"
+            onPress={() => navigation.navigate("Signup")}
+          />
+        </Controls>
       </View>
     </TouchableWithoutFeedback>
   );

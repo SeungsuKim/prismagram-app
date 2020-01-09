@@ -1,13 +1,17 @@
-import { Alert, Keyboard, TouchableWithoutFeedback } from "react-native";
 import React, { useState } from "react";
+import { useMutation } from "react-apollo-hooks";
+import { Alert, Keyboard, TouchableWithoutFeedback } from "react-native";
+import AutoHeightImage from "react-native-auto-height-image";
+import Divider from "react-native-divider";
+import styled from "styled-components";
 
+import theme from ".././../Styles";
 import AuthButton from "../../components/AuthButton";
 import AuthInput from "../../components/AuthInput";
-import { LOG_IN } from "../../queries/AuthQueries";
 import TextLink from "../../components/TextLink";
-import styled from "styled-components";
+import constants from "../../constants";
 import useInput from "../../hooks/useInput";
-import { useMutation } from "react-apollo-hooks";
+import { LOG_IN } from "../../queries/AuthQueries";
 
 const View = styled.View`
   flex: 1;
@@ -16,8 +20,25 @@ const View = styled.View`
   background-color: white;
 `;
 
+const Image = styled(AutoHeightImage)`
+  margin-bottom: 30px;
+`;
+
+const Controls = styled.View`
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+`;
+
+const DividerContainer = styled.View`
+  display: flex;
+  justify-content: center;
+  margin: 40px 20px;
+`;
+
 export default ({ navigation }) => {
-  const emailInput = useInput("");
+  const emailInput = useInput(navigation.getParam("email") || "");
   const [loading, setLoading] = useState(false);
   const [requestSecretMutation] = useMutation(LOG_IN, {
     variables: { email: emailInput.value }
@@ -55,19 +76,36 @@ export default ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View>
-        <AuthInput
-          {...emailInput}
-          placeholder={"Email"}
-          keyboardType={"email-address"}
-          onSubmitEditing={handleLogin}
-          disabled={loading}
+        <Image
+          width={constants.width / 2}
+          source={require("../../assets/cursive-logo.png")}
         />
-        <AuthButton text="Log In" onPress={handleLogin} loading={loading} />
-        <TextLink
-          text="Don't have an account?"
-          onPress={() => navigation.navigate("Signup")}
-          style={{ "margin-top": "25px" }}
-        />
+        <Controls>
+          <AuthInput
+            {...emailInput}
+            placeholder={"Email"}
+            keyboardType={"email-address"}
+            onSubmitEditing={handleLogin}
+            disabled={loading}
+          />
+          <AuthButton
+            text="Log In"
+            onPress={handleLogin}
+            loading={loading}
+            style={{ "margin-top": "10px" }}
+          />
+          <DividerContainer>
+            <Divider orientation="center" color={theme.darkGreyColor}>
+              or
+            </Divider>
+          </DividerContainer>
+          <TextLink
+            text="Don't have an account?"
+            onPress={() =>
+              navigation.navigate("Signup", { email: emailInput.value })
+            }
+          />
+        </Controls>
       </View>
     </TouchableWithoutFeedback>
   );
