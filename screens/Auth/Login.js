@@ -1,12 +1,13 @@
+import { Alert, Keyboard, TouchableWithoutFeedback } from "react-native";
 import React, { useState } from "react";
-import { Alert, TouchableWithoutFeedback, Keyboard } from "react-native";
-import { useMutation } from "react-apollo-hooks";
-import styled from "styled-components";
 
 import AuthButton from "../../components/AuthButton";
 import AuthInput from "../../components/AuthInput";
-import useInput from "../../hooks/useInput";
 import { LOG_IN } from "../../queries/AuthQueries";
+import TextLink from "../../components/TextLink";
+import styled from "styled-components";
+import useInput from "../../hooks/useInput";
+import { useMutation } from "react-apollo-hooks";
 
 const View = styled.View`
   flex: 1;
@@ -37,7 +38,7 @@ export default ({ navigation }) => {
         data: { requestSecret }
       } = await requestSecretMutation();
       if (requestSecret) {
-        navigation.navigate("Confirm");
+        navigation.navigate("Confirm", { email: value });
       } else {
         Alert.alert("Account not found");
       }
@@ -47,6 +48,8 @@ export default ({ navigation }) => {
     } finally {
       setLoading(false);
     }
+
+    return;
   };
 
   return (
@@ -60,6 +63,11 @@ export default ({ navigation }) => {
           disabled={loading}
         />
         <AuthButton text="Log In" onPress={handleLogin} loading={loading} />
+        <TextLink
+          text="Don't have an account?"
+          onPress={() => navigation.navigate("Signup")}
+          style={{ "margin-top": "25px" }}
+        />
       </View>
     </TouchableWithoutFeedback>
   );

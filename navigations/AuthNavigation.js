@@ -1,20 +1,19 @@
+import AuthHome from "../screens/Auth/AuthHome";
+import Confirm from "../screens/Auth/Confirm";
+import Login from "../screens/Auth/Login";
+import Signup from "../screens/Auth/Signup";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 
-import Signup from "../screens/Auth/Signup";
-import Confirm from "../screens/Auth/Confirm";
-import Login from "../screens/Auth/Login";
-import AuthHome from "../screens/Auth/AuthHome";
-
 const AuthNavigation = createStackNavigator(
   {
-    Signup,
-    Confirm,
     Login,
+    Confirm,
+    Signup,
     AuthHome
   },
   {
-    initialRouteName: "Login",
+    initialRouteName: "AuthHome",
     headerMode: "none"
   }
 );
