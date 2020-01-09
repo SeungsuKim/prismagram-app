@@ -1,24 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import constants from "../constants";
 
 const Container = styled.View`
   margin-bottom: 10px;
-  border-width: 1px;
 `;
 
-const TextInput = styled.TextInput``;
+const TextInput = styled.TextInput`
+  width: ${constants.width / 2};
+  padding: 10px;
+  background-color: ${props => props.theme.greyColor};
+  border: 1px solid ${props => props.theme.darkGreyColor};
+  border-radius: 4px;
+`;
 
 const AuthInput = ({
   placeholder,
   value,
+  onChage,
   keyboardType = "default",
-  autoCapitalize = false
+  autoCapitalize = "none"
 }) => (
   <Container>
     <TextInput
       placeholder={placeholder}
       value={value}
+      onChangeText={onChage}
       keyboardType={keyboardType}
       autoCapitalize={autoCapitalize}
     />
@@ -28,6 +36,7 @@ const AuthInput = ({
 AuthInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
+  onChage: PropTypes.func.isRequired,
   keyboardType: PropTypes.oneOf([
     "default",
     "number-pad",
@@ -35,7 +44,7 @@ AuthInput.propTypes = {
     "numeric",
     "email-address"
   ]),
-  autoCapitalize: PropTypes.bool
+  autoCapitalize: PropTypes.oneOf(["one", "sentences", "words", "characters"])
 };
 
 export default AuthInput;
