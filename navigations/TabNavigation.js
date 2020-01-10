@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 
 import MessagesLink from "../components/MessagesLink";
 import { FeatherIcon, IonIcon, SimpleLineIcon } from "../components/NavIcon";
+import Detail from "../screens/Detail";
 import Home from "../screens/Tabs/Home";
 import Notifications from "../screens/Tabs/Notifications";
 import Profile from "../screens/Tabs/Profile";
@@ -29,7 +30,8 @@ export default createBottomTabNavigator(
             ),
             headerStyle: { backgroundColor: theme.backgroundColor }
           }
-        }
+        },
+        Detail
       }),
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
@@ -43,6 +45,9 @@ export default createBottomTabNavigator(
           screen: Search,
           navigationOptions: {
             headerStyle: { backgroundColor: theme.backgroundColor }
+          },
+          Detail: {
+            screen: Detail
           }
         }
       }),
@@ -72,7 +77,8 @@ export default createBottomTabNavigator(
           screen: Notifications,
           navigationOptions: {
             headerStyle: { backgroundColor: theme.backgroundColor }
-          }
+          },
+          Detail
         }
       }),
       navigationOptions: {
@@ -87,7 +93,8 @@ export default createBottomTabNavigator(
           screen: Profile,
           navigationOptions: {
             headerStyle: { backgroundColor: theme.backgroundColor }
-          }
+          },
+          Detail
         }
       }),
       navigationOptions: {

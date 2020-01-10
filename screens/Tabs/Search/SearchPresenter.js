@@ -4,6 +4,8 @@ import { useQuery } from "react-apollo-hooks";
 import { RefreshControl, ScrollView } from "react-native";
 import styled from "styled-components";
 
+import Loader from "../../../components/Loader";
+import SquarePhoto from "../../../components/SquarePhoto";
 import { SEARCH } from "../../../queries/SearchQueries";
 
 const SearchPresenter = ({ term, shouldFetch }) => {
@@ -13,7 +15,8 @@ const SearchPresenter = ({ term, shouldFetch }) => {
     variables: {
       term
     },
-    skip: !shouldFetch
+    skip: !shouldFetch,
+    fetchPolicy: "network-only"
   });
 
   const onRefresh = async () => {
@@ -33,7 +36,15 @@ const SearchPresenter = ({ term, shouldFetch }) => {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
       style={{ backgroundColor: "white" }}
-    ></ScrollView>
+    >
+      {loading ? (
+        <Loader />
+      ) : (
+        data &&
+        data.searchPost &&
+        data.searchPost.map(post => <SquarePhoto key={post.id} {...post} />)
+      )}
+    </ScrollView>
   );
 };
 
