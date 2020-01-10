@@ -29,3 +29,21 @@ export const FEED_QUERY = gql`
     }
   }
 `;
+
+export const TOOGLE_LIKE = gql`
+  mutation toggleLike($postId: String!) {
+    toogleLike(postId: $postId)
+  }
+`;
+
+export const ADD_COMMENT = gql`
+  mutation addComment($postId: String!, $text: String!) {
+    addComment(postId: $postId, text: $text) {
+      id
+      text
+      user {
+        username
+      }
+    }
+  }
+`;

@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import Loader from "../../components/Loader";
 import Post from "../../components/Post";
-import { FEED_QUERY } from "../../queries/FeedQueires";
+import { FEED_QUERY } from "../../queries/PostQueires";
 
 const View = styled.ScrollView`
   flex: 1;
