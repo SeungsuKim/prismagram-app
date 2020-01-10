@@ -10,6 +10,7 @@ import Home from "../screens/Tabs/Home";
 import Notifications from "../screens/Tabs/Notifications";
 import Profile from "../screens/Tabs/Profile";
 import Search from "../screens/Tabs/Search";
+import theme from "../Styles";
 
 export default createBottomTabNavigator(
   {
@@ -25,18 +26,30 @@ export default createBottomTabNavigator(
                 style={{ height: 40 }}
                 resizeMode="contain"
               />
-            )
+            ),
+            headerStyle: { backgroundColor: theme.backgroundColor }
           }
         }
       }),
       navigationOptions: {
-        tabBarIcon: <FoundationIcon name={"home"} size={30} />
+        tabBarIcon: ({ focused }) => (
+          <FoundationIcon name={"home"} size={30} focused={focused} />
+        )
       }
     },
     Search: {
-      screen: createStackNavigator({ Search }),
+      screen: createStackNavigator({
+        Search: {
+          screen: Search,
+          navigationOptions: {
+            headerStyle: { backgroundColor: theme.backgroundColor }
+          }
+        }
+      }),
       navigationOptions: {
-        tabBarIcon: <IonIcon name={"ios-search"} size={30} />
+        tabBarIcon: ({ focused }) => (
+          <IonIcon name={"ios-search"} size={30} focused={focused} />
+        )
       }
     },
     Add: {
@@ -44,21 +57,50 @@ export default createBottomTabNavigator(
       navigationOptions: {
         tabBarOnPress: ({ navigation }) =>
           navigation.navigate("PhotoNavigation"),
-        tabBarIcon: <IonIcon name={"ios-add-circle-outline"} size={30} />
+        tabBarIcon: ({ focused }) => (
+          <IonIcon
+            name={"ios-add-circle-outline"}
+            size={30}
+            focused={focused}
+          />
+        )
       }
     },
     Notifications: {
-      screen: createStackNavigator({ Notifications }),
+      screen: createStackNavigator({
+        Notifications: {
+          screen: Notifications,
+          navigationOptions: {
+            headerStyle: { backgroundColor: theme.backgroundColor }
+          }
+        }
+      }),
       navigationOptions: {
-        tabBarIcon: <IonIcon name={"ios-heart-empty"} size={30} />
+        tabBarIcon: ({ focused }) => (
+          <IonIcon name={"ios-heart-empty"} size={30} focused={focused} />
+        )
       }
     },
     Profile: {
-      screen: createStackNavigator({ Profile }),
+      screen: createStackNavigator({
+        Profile: {
+          screen: Profile,
+          navigationOptions: {
+            headerStyle: { backgroundColor: theme.backgroundColor }
+          }
+        }
+      }),
       navigationOptions: {
-        tabBarIcon: <SimpleLineIcon name={"user"} size={30} />
+        tabBarIcon: ({ focused }) => (
+          <SimpleLineIcon name={"user"} size={30} focused={focused} />
+        )
       }
     }
   },
-  { tabBarOptions: { showLabel: false } }
+  {
+    tabBarOptions: {
+      showLabel: false,
+      tabStyle: { backgroundColor: theme.backgroundColor }
+    }
+  }
 );

@@ -7,33 +7,59 @@ import styles from "../Styles";
 export const SimpleLineIcon = ({
   name,
   color = styles.blackColor,
-  size = 23
-}) => <SimpleLineIcons name={name} color={color} size={size} />;
+  size = 23,
+  focused = true
+}) => (
+  <SimpleLineIcons
+    name={name}
+    color={focused ? color : styles.darkGreyColor}
+    size={size}
+  />
+);
 
 SimpleLineIcon.propTypes = {
   name: PropTypes.string.isRequired,
   color: PropTypes.string,
-  size: PropTypes.number
+  size: PropTypes.number,
+  focused: PropTypes.bool
 };
 
 export const FoundationIcon = ({
   name,
   color = styles.blackColor,
-  size = 23
-}) => <Foundation name={name} color={color} size={size} />;
+  size = 23,
+  focused = true
+}) => (
+  <Foundation
+    name={name}
+    color={focused ? color : styles.darkGreyColor}
+    size={size}
+  />
+);
 
 FoundationIcon.propTypes = {
   name: PropTypes.string.isRequired,
   color: PropTypes.string,
-  size: PropTypes.number
+  size: PropTypes.number,
+  focused: PropTypes.bool
 };
 
-export const IonIcon = ({ name, color = styles.blackColor, size = 23 }) => (
-  <Ionicons name={name} color={color} size={size} />
+export const IonIcon = ({
+  name,
+  color = styles.blackColor,
+  size = 23,
+  focused = true
+}) => (
+  <Ionicons
+    name={name}
+    color={focused ? color : styles.darkGreyColor}
+    size={size}
+  />
 );
 
 IonIcon.propTypes = {
   name: PropTypes.string.isRequired,
   color: PropTypes.string,
-  size: PropTypes.number
+  size: PropTypes.number,
+  focused: PropTypes.bool
 };
