@@ -14,7 +14,7 @@ const AuthNavigation = createStackNavigator(
     AuthHome
   },
   {
-    initialRouteName: "Signup",
+    initialRouteName: "AuthHome",
     headerMode: "none"
   }
 );

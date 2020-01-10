@@ -5,7 +5,7 @@ const useInput = initialValue => {
 
   const onChage = text => setValue(text);
 
-  return { value, onChage };
+  return { value, onChage, setValue };
 };
 
 export default useInput;

@@ -103,22 +103,37 @@ export default ({ navigation }) => {
   };
 
   const fbLogin = async () => {
+    setLoading(true);
+
     try {
+      Facebook.initializeAsync("828915807569753");
       const { type, token } = await Facebook.logInWithReadPermissionsAsync(
         "828915807569753",
         {
-          permissions: ["public_profile"]
+          permissions: ["public_profile", "email"]
         }
       );
 
       if (type === "success") {
         const response = await fetch(
-          `https://graph.facebook.com/me?access_token=${token}`
+          `https://graph.facebook.com/me?access_token=${token}&fields=id,first_name,last_name,email`
         );
-        Alert.alert((await response.json()).name);
+
+        const {
+          email,
+          first_name: firstName,
+          last_name: lastName
+        } = await response.json();
+
+        emailInput.setValue(email);
+        firstNameInput.setValue(firstName);
+        lastNameInput.setValue(lastName);
+        usernameInput.setValue(email.split("@")[0]);
       }
     } catch ({ message }) {
       alert(`Facebook Login Error: ${message}`);
+    } finally {
+      setLoading(false);
     }
   };
 
