@@ -1,12 +1,16 @@
 import React from "react";
-import styled from "styled-components";
 import { withNavigation } from "react-navigation";
+import styled from "styled-components";
 
-const Container = styled.TouchableOpacity``;
-const Text = styled.Text``;
+import theme from "../Styles";
+import { SimpleLineIcon } from "./NavIcon";
+
+const Container = styled.TouchableOpacity`
+  padding-right: 10px;
+`;
 
 export default withNavigation(({ navigation }) => (
   <Container onPress={() => navigation.navigate("MessageNavigation")}>
-    <Text>Messages</Text>
+    <SimpleLineIcon name={"paper-plane"} />
   </Container>
 ));

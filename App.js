@@ -1,19 +1,18 @@
-import * as Font from "expo-font";
-
-import React, { useEffect, useState } from "react";
-
+import { Foundation, Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "react-apollo-hooks";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { persistCache } from "apollo-cache-persist";
 import { AppLoading } from "expo";
 import { Asset } from "expo-asset";
+import * as Font from "expo-font";
+import React, { useEffect, useState } from "react";
+import { ApolloProvider } from "react-apollo-hooks";
 import { AsyncStorage } from "react-native";
-import { AuthProvider } from "./AuthContext";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { Ionicons } from "@expo/vector-icons";
-import NavController from "./components/NavController";
 import { ThemeProvider } from "styled-components";
+
 import apolloClientOptions from "./Apollo";
-import { persistCache } from "apollo-cache-persist";
+import { AuthProvider } from "./AuthContext";
+import NavController from "./components/NavController";
 import styles from "./Styles";
 
 export default function App() {
@@ -26,9 +25,10 @@ export default function App() {
   }, []);
 
   const preLoad = async () => {
-    await AsyncStorage.clear();
     try {
       await Font.loadAsync({
+        ...SimpleLineIcons.font,
+        ...Foundation.font,
         ...Ionicons.font
       });
 
