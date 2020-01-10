@@ -7,15 +7,6 @@ import Loader from "../../components/Loader";
 import Post from "../../components/Post";
 import { FEED_QUERY } from "../../queries/PostQueires";
 
-const View = styled.ScrollView`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-`;
-
-const Text = styled.Text``;
-
 export default () => {
   const [refreshing, setRefreshing] = useState(false);
 
