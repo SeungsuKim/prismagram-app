@@ -20,7 +20,7 @@ export default createBottomTabNavigator(
           screen: Home,
           navigationOptions: {
             headerRight: () => <MessagesLink />,
-            headerTitle: (
+            headerTitle: () => (
               <Image
                 source={require("../assets/cursive-logo.png")}
                 style={{ height: 30 }}
