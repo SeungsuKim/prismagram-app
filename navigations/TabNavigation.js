@@ -5,7 +5,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 
 import MessagesLink from "../components/MessagesLink";
-import { FoundationIcon, IonIcon, SimpleLineIcon } from "../components/NavIcon";
+import { FeatherIcon, IonIcon, SimpleLineIcon } from "../components/NavIcon";
 import Home from "../screens/Tabs/Home";
 import Notifications from "../screens/Tabs/Notifications";
 import Profile from "../screens/Tabs/Profile";
@@ -23,7 +23,7 @@ export default createBottomTabNavigator(
             headerTitle: (
               <Image
                 source={require("../assets/cursive-logo.png")}
-                style={{ height: 40 }}
+                style={{ height: 30 }}
                 resizeMode="contain"
               />
             ),
@@ -33,7 +33,7 @@ export default createBottomTabNavigator(
       }),
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
-          <FoundationIcon name={"home"} size={30} focused={focused} />
+          <FeatherIcon name={"home"} size={27} focused={focused} />
         )
       }
     },
@@ -92,7 +92,7 @@ export default createBottomTabNavigator(
       }),
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
-          <SimpleLineIcon name={"user"} size={30} focused={focused} />
+          <SimpleLineIcon name={"user"} size={25} focused={focused} />
         )
       }
     }
@@ -100,7 +100,7 @@ export default createBottomTabNavigator(
   {
     tabBarOptions: {
       showLabel: false,
-      tabStyle: { backgroundColor: theme.backgroundColor }
+      style: { backgroundColor: theme.backgroundColor }
     }
   }
 );

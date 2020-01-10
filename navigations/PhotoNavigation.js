@@ -1,9 +1,10 @@
-import { createMaterialTopTabNavigator } from "react-navigation-tabs";
 import { createStackNavigator } from "react-navigation-stack";
+import { createMaterialTopTabNavigator } from "react-navigation-tabs";
 
-import TakePhoto from "../screens/Photo/TakePhoto";
 import SelectPhoto from "../screens/Photo/SelectPhoto";
+import TakePhoto from "../screens/Photo/TakePhoto";
 import UploadPhoto from "../screens/Photo/UploadPhoto";
+import theme from "../Styles";
 
 const PhotoTabs = createMaterialTopTabNavigator(
   {
@@ -15,7 +16,14 @@ const PhotoTabs = createMaterialTopTabNavigator(
   }
 );
 
-export default createStackNavigator({
-  PhotoTabs,
-  UploadPhoto
-});
+export default createStackNavigator(
+  {
+    PhotoTabs,
+    UploadPhoto
+  },
+  {
+    defaultNavigationOptions: {
+      headerStyle: { backgroundColor: theme.backgroundColor }
+    }
+  }
+);

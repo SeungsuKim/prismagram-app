@@ -1,4 +1,4 @@
-import { Foundation, Ionicons, SimpleLineIcons } from "@expo/vector-icons";
+import { Feather, Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -24,20 +24,20 @@ SimpleLineIcon.propTypes = {
   focused: PropTypes.bool
 };
 
-export const FoundationIcon = ({
+export const FeatherIcon = ({
   name,
   color = styles.blackColor,
   size = 23,
   focused = true
 }) => (
-  <Foundation
+  <Feather
     name={name}
     color={focused ? color : styles.darkGreyColor}
     size={size}
   />
 );
 
-FoundationIcon.propTypes = {
+FeatherIcon.propTypes = {
   name: PropTypes.string.isRequired,
   color: PropTypes.string,
   size: PropTypes.number,
