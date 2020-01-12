@@ -6,12 +6,10 @@ import Loader from "../components/Loader";
 import Post from "../components/Post";
 import { POST_DETAIL } from "../queries/PostQueires";
 
-const View = styled.View`
+const ScrollView = styled.ScrollView`
   background-color: white;
   flex: 1;
 `;
-
-const Text = styled.Text``;
 
 export default ({ navigation }) => {
   const { loading, data } = useQuery(POST_DETAIL, {
@@ -21,12 +19,12 @@ export default ({ navigation }) => {
   console.log(loading, data);
 
   return (
-    <View>
+    <ScrollView>
       {loading ? (
         <Loader />
       ) : (
         data && data.seeFullPost && <Post {...data.seeFullPost} />
       )}
-    </View>
+    </ScrollView>
   );
 };
