@@ -26,6 +26,7 @@ const stackFactory = (initialRoute, customConfig) =>
         screen: Detail,
         navigationOptions: {
           headerTintColor: theme.blackColor,
+          headerBackTitleVisible: false,
           title: "Photo"
         }
       }
