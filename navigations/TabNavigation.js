@@ -1,11 +1,11 @@
 import React from "react";
-import { Image } from "react-native";
-import { View } from "react-native";
+import { Image, View } from "react-native";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 
 import MessagesLink from "../components/MessagesLink";
 import { FeatherIcon, IonIcon, SimpleLineIcon } from "../components/NavIcon";
+import NavIcon from "../components/NavIcon";
 import Detail from "../screens/Detail";
 import Home from "../screens/Tabs/Home";
 import Notifications from "../screens/Tabs/Notifications";
@@ -13,25 +13,42 @@ import Profile from "../screens/Tabs/Profile";
 import Search from "../screens/Tabs/Search";
 import theme from "../Styles";
 
+const stackFactory = (initialRoute, customConfig) =>
+  createStackNavigator(
+    {
+      InitialRoute: {
+        screen: initialRoute,
+        navigationOptions: {
+          ...customConfig
+        }
+      },
+      Detail: {
+        screen: Detail,
+        navigationOptions: {
+          headerTintColor: theme.blackColor,
+          title: "Photo"
+        }
+      }
+    },
+    {
+      defaultNavigationOptions: {
+        headerStyle: { backgroundColor: theme.backgroundColor }
+      }
+    }
+  );
+
 export default createBottomTabNavigator(
   {
     Home: {
-      screen: createStackNavigator({
-        Home: {
-          screen: Home,
-          navigationOptions: {
-            headerRight: () => <MessagesLink />,
-            headerTitle: () => (
-              <Image
-                source={require("../assets/cursive-logo.png")}
-                style={{ height: 30 }}
-                resizeMode="contain"
-              />
-            ),
-            headerStyle: { backgroundColor: theme.backgroundColor }
-          }
-        },
-        Detail
+      screen: stackFactory(Home, {
+        headerRight: () => <MessagesLink />,
+        headerTitle: () => (
+          <Image
+            source={require("../assets/cursive-logo.png")}
+            style={{ height: 30 }}
+            resizeMode="contain"
+          />
+        )
       }),
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
@@ -40,16 +57,8 @@ export default createBottomTabNavigator(
       }
     },
     Search: {
-      screen: createStackNavigator({
-        Search: {
-          screen: Search,
-          navigationOptions: {
-            headerStyle: { backgroundColor: theme.backgroundColor }
-          },
-          Detail: {
-            screen: Detail
-          }
-        }
+      screen: stackFactory(Search, {
+        headerBackTitle: null
       }),
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
@@ -72,14 +81,8 @@ export default createBottomTabNavigator(
       }
     },
     Notifications: {
-      screen: createStackNavigator({
-        Notifications: {
-          screen: Notifications,
-          navigationOptions: {
-            headerStyle: { backgroundColor: theme.backgroundColor }
-          },
-          Detail
-        }
+      screen: stackFactory(Notifications, {
+        title: "Notifications"
       }),
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
@@ -88,14 +91,8 @@ export default createBottomTabNavigator(
       }
     },
     Profile: {
-      screen: createStackNavigator({
-        Profile: {
-          screen: Profile,
-          navigationOptions: {
-            headerStyle: { backgroundColor: theme.backgroundColor }
-          },
-          Detail
-        }
+      screen: stackFactory(Profile, {
+        title: "Profile"
       }),
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
@@ -108,7 +105,9 @@ export default createBottomTabNavigator(
     initialRouteName: "Search",
     tabBarOptions: {
       showLabel: false,
-      style: { backgroundColor: theme.backgroundColor }
+      style: {
+        backgroundColor: theme.backgroundColor
+      }
     }
   }
 );

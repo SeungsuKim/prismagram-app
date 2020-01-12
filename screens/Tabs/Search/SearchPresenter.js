@@ -15,8 +15,7 @@ const SearchPresenter = ({ term, shouldFetch }) => {
     variables: {
       term
     },
-    skip: !shouldFetch,
-    fetchPolicy: "network-only"
+    skip: !shouldFetch
   });
 
   const onRefresh = async () => {
@@ -35,7 +34,11 @@ const SearchPresenter = ({ term, shouldFetch }) => {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
-      style={{ backgroundColor: "white" }}
+      contentContainerStyle={{
+        display: "flex",
+        flexWrap: "wrap",
+        flexDirection: "row"
+      }}
     >
       {loading ? (
         <Loader />

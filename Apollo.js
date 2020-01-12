@@ -1,3 +1,3 @@
-const apolloClientOptions = { uri: "http://localhost:4000" };
+const apolloClientOptions = { uri: "https://prismagram-prod.herokuapp.com/" };
 
 export default apolloClientOptions;
