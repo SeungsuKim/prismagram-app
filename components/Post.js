@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useMutation } from "react-apollo-hooks";
 import { Image, Text } from "react-native";
 import Swiper from "react-native-swiper";
+import { withNavigation } from "react-navigation";
 import styled from "styled-components";
 
 import { IonIcon, SimpleLineIcon } from "../components/NavIcon";
@@ -54,6 +55,7 @@ const CommentCount = styled.Text`
 `;
 
 const Post = ({
+  navigation,
   id,
   user,
   files = [],
@@ -81,13 +83,21 @@ const Post = ({
   return (
     <Container>
       <Header>
-        <Touchable>
+        <Touchable
+          onPress={() =>
+            navigation.navigate("UserDetail", { username: user.username })
+          }
+        >
           <Image
             source={{ uri: user.avatar }}
             style={{ height: 30, width: 30, borderRadius: 15 }}
           />
         </Touchable>
-        <Touchable>
+        <Touchable
+          onPress={() =>
+            navigation.navigate("UserDetail", { username: user.username })
+          }
+        >
           <HeaderTextContainer>
             <Bold>{user.username}</Bold>
             {location && <Location>{location}</Location>}
@@ -185,4 +195,4 @@ Post.propTypes = {
   caption: PropTypes.string.isRequired
 };
 
-export default Post;
+export default withNavigation(Post);

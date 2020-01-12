@@ -11,6 +11,7 @@ import Home from "../screens/Tabs/Home";
 import Notifications from "../screens/Tabs/Notifications";
 import Profile from "../screens/Tabs/Profile";
 import Search from "../screens/Tabs/Search";
+import UserDetail from "../screens/UserDetail";
 import theme from "../Styles";
 
 const stackFactory = (initialRoute, customConfig) =>
@@ -25,15 +26,23 @@ const stackFactory = (initialRoute, customConfig) =>
       Detail: {
         screen: Detail,
         navigationOptions: {
-          headerTintColor: theme.blackColor,
-          headerBackTitleVisible: false,
           title: "Photo"
+        }
+      },
+      UserDetail: {
+        screen: UserDetail,
+        navigationOptions: {
+          title: "Profile"
         }
       }
     },
     {
       defaultNavigationOptions: {
-        headerStyle: { backgroundColor: theme.backgroundColor }
+        headerStyle: {
+          backgroundColor: theme.backgroundColor
+        },
+        headerTintColor: theme.blackColor,
+        headerBackTitleVisible: false
       }
     }
   );

@@ -2,7 +2,15 @@ import PropTypes from "prop-types";
 import React from "react";
 import styled from "styled-components";
 
-const UserProfile = () => null;
+const View = styled.View``;
+
+const Text = styled.Text``;
+
+const UserProfile = () => (
+  <View>
+    <Text></Text>
+  </View>
+);
 
 UserProfile.propTypes = {
   id: PropTypes.string.isRequired,
