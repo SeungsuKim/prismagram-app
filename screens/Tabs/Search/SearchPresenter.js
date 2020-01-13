@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { useQuery } from "react-apollo-hooks";
 import { RefreshControl, ScrollView } from "react-native";
-import styled from "styled-components";
 
 import Loader from "../../../components/Loader";
 import SquarePhoto from "../../../components/SquarePhoto";

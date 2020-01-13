@@ -17,7 +17,7 @@ const stackFactory = (initialRoute, customConfig) =>
       UploadPhoto: {
         screen: UploadPhoto,
         navigationOptions: {
-          title: "Upload"
+          title: "New Post"
         }
       }
     },
