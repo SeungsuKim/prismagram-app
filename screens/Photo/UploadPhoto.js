@@ -51,24 +51,34 @@ export default class extends React.Component {
   };
 
   componentDidMount() {
-    this.props.navigation.setParams({ upload: this.upload });
+    this.props.navigation.setParams({ upload: this.upload.bind(this) });
   }
 
   async upload() {
     const { caption, location, photo } = this.state;
+    console.log(caption, location);
     if (caption === "" || location === "") {
       Alert.alert("All fields are required");
     }
 
     const formData = new FormData();
-    formData.append("file", photo, {
+    formData.append("file", {
       name: photo.filename,
-      type: photo.filename.split(".")[1].toLowerCase()
+      type: photo.filename.split(".")[1].toLowerCase(),
+      uri: photo.uri
     });
 
-    await axios.post("http://localhost:4000/api/upload", formData, {
-      headers: { contentType: "multipart/form-data" }
-    });
+    try {
+      const {
+        data: { location }
+      } = await axios.post("http://localhost:4000/api/upload", formData, {
+        headers: { "content-type": "multipart/form-data" }
+      });
+      this.setState({ fileUrl: location });
+      console.log(location);
+    } catch (error) {
+      Alert.alert("Cannot upload", "Try again later");
+    }
   }
 
   render() {
