@@ -58,7 +58,7 @@ export default () => {
     setSelectedPhoto(photo);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     askPermission();
   }, []);
 
