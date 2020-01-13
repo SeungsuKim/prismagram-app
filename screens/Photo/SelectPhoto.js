@@ -13,11 +13,13 @@ const SelectedPhoto = styled.Image`
   width: ${constants.width};
   height: ${constants.width};
 `;
+const Touchable = styled.TouchableOpacity``;
 const Photo = styled.Image`
   width: ${constants.width / 4};
   height: ${constants.width / 4};
   border-width: 1px;
   border-color: white;
+  ${props => (props.selected ? "opacity: 0.3" : "opacity: 1")}
 `;
 
 export default () => {
@@ -44,15 +46,19 @@ export default () => {
   const getPhotos = async () => {
     try {
       const { assets } = await MediaLibrary.getAssetsAsync();
-      const [firstPhoto, ...allPhotos] = assets;
+      const [firstPhoto] = assets;
       setSelectedPhoto(firstPhoto);
-      setAllPhotos(allPhotos);
+      setAllPhotos(assets);
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
+  const changeSelected = photo => {
+    setSelectedPhoto(photo);
+  };
+
+  useEffect(async () => {
     askPermission();
   }, []);
 
@@ -72,7 +78,12 @@ export default () => {
           >
             {allPhotos &&
               allPhotos.map(photo => (
-                <Photo key={photo.id} source={{ uri: photo.uri }} />
+                <Touchable key={photo.id} onPress={() => changeSelected(photo)}>
+                  <Photo
+                    source={{ uri: photo.uri }}
+                    selected={selectedPhoto.id === photo.id}
+                  />
+                </Touchable>
               ))}
           </AllPhotos>
         </PhotoContainer>

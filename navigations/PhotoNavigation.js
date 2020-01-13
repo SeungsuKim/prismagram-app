@@ -43,7 +43,9 @@ export default createStackNavigator(
   {
     PhotoTabs: {
       screen: PhotoTabs,
-      navigationOptions: {}
+      navigationOptions: {
+        title: "Select Photo"
+      }
     },
     UploadPhoto
   },
