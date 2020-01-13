@@ -22,7 +22,7 @@ const Photo = styled.Image`
   ${props => (props.selected ? "opacity: 0.3" : "opacity: 1")}
 `;
 
-export default () => {
+export default ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [hasPermission, setHasPermission] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -56,6 +56,7 @@ export default () => {
 
   const changeSelected = photo => {
     setSelectedPhoto(photo);
+    navigation.setParams({ photo });
   };
 
   useEffect(() => {

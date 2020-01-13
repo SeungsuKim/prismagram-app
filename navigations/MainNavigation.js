@@ -8,8 +8,8 @@ import TabNavigation from "./TabNavigation";
 
 const MainNavigation = createStackNavigator(
   {
-    TabNavigation,
     PhotoNavigation,
+    TabNavigation,
     MessageNavigation
   },
   {

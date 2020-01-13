@@ -1,3 +1,4 @@
+import React from "react";
 import { createStackNavigator } from "react-navigation-stack";
 import { createMaterialTopTabNavigator } from "react-navigation-tabs";
 
@@ -6,19 +7,40 @@ import TakePhoto from "../screens/Photo/TakePhoto";
 import UploadPhoto from "../screens/Photo/UploadPhoto";
 import theme from "../Styles";
 
-const PhotoTabs = createMaterialTopTabNavigator(
-  {
-    SelectPhoto: {
-      screen: SelectPhoto,
-      navigationOptions: {
-        tabBarLabel: "Select"
+const stackFactory = (initialRoute, customConfig) =>
+  createStackNavigator(
+    {
+      InitialRoute: {
+        screen: initialRoute,
+        navigationOptions: { ...customConfig }
+      },
+      UploadPhoto: {
+        screen: UploadPhoto,
+        navigationOptions: {
+          title: "Upload"
+        }
       }
     },
-    TakePhoto: {
-      screen: TakePhoto,
-      navigationOptions: {
-        tabBarLabel: "Take"
+    {
+      defaultNavigationOptions: {
+        headerStyle: {
+          backgroundColor: theme.backgroundColor
+        },
+        headerTintColor: theme.blackColor,
+        headerBackTitleVisible: false
       }
+    }
+  );
+
+export default createMaterialTopTabNavigator(
+  {
+    SelectPhoto: {
+      screen: stackFactory(SelectPhoto, { title: "Choose Photo" }),
+      navigationOptions: { tabBarLabel: "Select" }
+    },
+    TakePhoto: {
+      screen: stackFactory(TakePhoto, { title: "Take Photo" }),
+      navigationOptions: { tabBarLabel: "Take" }
     }
   },
   {
@@ -35,23 +57,6 @@ const PhotoTabs = createMaterialTopTabNavigator(
       inactiveTintColor: theme.darkGreyColor,
       pressColor: theme.backgroundColor,
       renderIndicator: () => null
-    }
-  }
-);
-
-export default createStackNavigator(
-  {
-    PhotoTabs: {
-      screen: PhotoTabs,
-      navigationOptions: {
-        title: "Select Photo"
-      }
-    },
-    UploadPhoto
-  },
-  {
-    defaultNavigationOptions: {
-      headerStyle: { backgroundColor: theme.backgroundColor }
     }
   }
 );

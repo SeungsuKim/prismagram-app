@@ -32,6 +32,7 @@ const SearchBar = ({ value, onChange, onSubmit }) => (
     <SearchIcon>
       <IonIcon name={"ios-search"} color={theme.darkGreyColor} size={20} />
     </SearchIcon>
+
     <TextInput
       value={value}
       placeholder={"Search"}
