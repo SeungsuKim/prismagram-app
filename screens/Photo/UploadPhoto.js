@@ -1,5 +1,6 @@
+import axios from "axios";
 import React from "react";
-import { Keyboard, TouchableWithoutFeedback } from "react-native";
+import { Alert, Keyboard, TouchableWithoutFeedback } from "react-native";
 import styled from "styled-components";
 
 import HeaderRightButton from "../../components/HeaderRightButton";
@@ -45,6 +46,7 @@ export default class extends React.Component {
   state = {
     caption: "",
     location: "",
+    photo: this.props.navigation.getParam("photo"),
     fileUrl: ""
   };
 
@@ -52,16 +54,29 @@ export default class extends React.Component {
     this.props.navigation.setParams({ upload: this.upload });
   }
 
-  upload() {}
+  async upload() {
+    const { caption, location, photo } = this.state;
+    if (caption === "" || location === "") {
+      Alert.alert("All fields are required");
+    }
+
+    const formData = new FormData();
+    formData.append("file", photo, {
+      name: photo.filename,
+      type: photo.filename.split(".")[1].toLowerCase()
+    });
+
+    await axios.post("http://localhost:4000/api/upload", formData, {
+      headers: { contentType: "multipart/form-data" }
+    });
+  }
 
   render() {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
           <InputForm>
-            <Photo
-              source={{ uri: this.props.navigation.getParam("photo").uri }}
-            />
+            <Photo source={{ uri: this.state.photo.uri }} />
             <CaptionInput
               multiline
               placeholder={"Write caption..."}
