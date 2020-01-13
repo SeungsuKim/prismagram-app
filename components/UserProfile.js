@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import constants from "../constants";
 import theme from "../Styles";
 import { FeatherIcon, SimpleLineIcon } from "./NavIcon";
+import Post from "./Post";
+import SquarePhoto from "./SquarePhoto";
 
 const View = styled.View`
   background-color: ${theme.backgroundColor};
@@ -58,10 +60,16 @@ const Bio = styled.Text``;
 const ButtonContainer = styled.View`
   display: flex;
   flex-direction: row;
+  margin-bottom: 2px;
 `;
 const Button = styled.TouchableOpacity`
   width: ${constants.width / 2};
   align-items: center;
+  padding: 5px 0px;
+  ${props =>
+    props.active
+      ? `border-bottom-width : 1px; border-color ${theme.blackColor}`
+      : ""}
 `;
 
 const UserProfile = ({
@@ -70,46 +78,65 @@ const UserProfile = ({
   fullName,
   postCount,
   followingCount,
-  followerCount
-}) => (
-  <View>
-    <ProfileHeader>
-      <Avatar source={{ uri: avatar }} />
-      <HeaderColumn>
-        <ProfileStats>
-          <Stat>
-            <StatNumber>{postCount}</StatNumber>
-            <StatName>posts</StatName>
-          </Stat>
-          <Stat>
-            <StatNumber>{followerCount}</StatNumber>
-            <StatName>followers</StatName>
-          </Stat>
-          <Stat>
-            <StatNumber>{followingCount}</StatNumber>
-            <StatName>following</StatName>
-          </Stat>
-        </ProfileStats>
-      </HeaderColumn>
-    </ProfileHeader>
-    <ProfileMeta>
-      <UserName>{fullName}</UserName>
-      <Bio>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s,
-      </Bio>
-    </ProfileMeta>
-    <ButtonContainer>
-      <Button>
-        <SimpleLineIcon name={"grid"} />
-      </Button>
-      <Button>
-        <FeatherIcon name={"menu"} />
-      </Button>
-    </ButtonContainer>
-  </View>
-);
+  followerCount,
+  posts
+}) => {
+  const [isGrid, setIsGrid] = useState(true);
+
+  return (
+    <View>
+      <ProfileHeader>
+        <Avatar source={{ uri: avatar }} />
+        <HeaderColumn>
+          <ProfileStats>
+            <Stat>
+              <StatNumber>{postCount}</StatNumber>
+              <StatName>posts</StatName>
+            </Stat>
+            <Stat>
+              <StatNumber>{followerCount}</StatNumber>
+              <StatName>followers</StatName>
+            </Stat>
+            <Stat>
+              <StatNumber>{followingCount}</StatNumber>
+              <StatName>following</StatName>
+            </Stat>
+          </ProfileStats>
+        </HeaderColumn>
+      </ProfileHeader>
+      <ProfileMeta>
+        <UserName>{fullName}</UserName>
+        <Bio>
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry. Lorem Ipsum has been the industry's standard dummy text ever
+          since the 1500s,
+        </Bio>
+      </ProfileMeta>
+      <ButtonContainer>
+        <Button onPress={() => setIsGrid(true)} active={isGrid}>
+          <SimpleLineIcon
+            name={"grid"}
+            color={isGrid ? theme.blackColor : theme.darkGreyColor}
+          />
+        </Button>
+        <Button onPress={() => setIsGrid(false)} active={!isGrid}>
+          <FeatherIcon
+            name={"menu"}
+            color={isGrid ? theme.darkGreyColor : theme.blackColor}
+          />
+        </Button>
+      </ButtonContainer>
+      {posts &&
+        posts.map(post =>
+          isGrid ? (
+            <SquarePhoto key={post.id} {...post} />
+          ) : (
+            <Post key={post.id} {...post} />
+          )
+        )}
+    </View>
+  );
+};
 
 UserProfile.propTypes = {
   id: PropTypes.string.isRequired,

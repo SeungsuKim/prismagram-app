@@ -32,7 +32,11 @@ const stackFactory = (initialRoute, customConfig) =>
       UserDetail: {
         screen: UserDetail,
         navigationOptions: ({ navigation }) => ({
-          title: navigation.getParam("username")
+          title: navigation.getParam("username"),
+          headerStyle: {
+            shadowColor: "transparent",
+            backgroundColor: theme.backgroundColor
+          }
         })
       }
     },
