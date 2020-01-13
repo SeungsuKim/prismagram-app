@@ -1,11 +1,24 @@
 import * as MediaLibrary from "expo-media-library";
 import * as Permissions from "expo-permissions";
 import React, { useEffect, useState } from "react";
-import { Image, Text, View } from "react-native";
 import styled from "styled-components";
 
 import Loader from "../../components/Loader";
 import constants from "../../constants";
+
+const View = styled.View``;
+const PhotoContainer = styled.View``;
+const AllPhotos = styled.ScrollView``;
+const SelectedPhoto = styled.Image`
+  width: ${constants.width};
+  height: ${constants.width};
+`;
+const Photo = styled.Image`
+  width: ${constants.width / 4};
+  height: ${constants.width / 4};
+  border-width: 1px;
+  border-color: white;
+`;
 
 export default () => {
   const [loading, setLoading] = useState(true);
@@ -34,7 +47,6 @@ export default () => {
       const [firstPhoto, ...allPhotos] = assets;
       setSelectedPhoto(firstPhoto);
       setAllPhotos(allPhotos);
-      console.log(selectedPhoto);
     } catch (error) {
       console.log(error);
     }
@@ -49,10 +61,21 @@ export default () => {
       {loading ? (
         <Loader />
       ) : (
-        <Image
-          source={{ uri: selectedPhoto.uri }}
-          style={{ width: constants.width, height: constants.width }}
-        />
+        <PhotoContainer>
+          <SelectedPhoto source={{ uri: selectedPhoto.uri }} />
+          <AllPhotos
+            contentContainerStyle={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap"
+            }}
+          >
+            {allPhotos &&
+              allPhotos.map(photo => (
+                <Photo key={photo.id} source={{ uri: photo.uri }} />
+              ))}
+          </AllPhotos>
+        </PhotoContainer>
       )}
     </View>
   );
