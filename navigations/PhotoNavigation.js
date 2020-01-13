@@ -8,17 +8,45 @@ import theme from "../Styles";
 
 const PhotoTabs = createMaterialTopTabNavigator(
   {
-    SelectPhoto,
-    TakePhoto
+    SelectPhoto: {
+      screen: SelectPhoto,
+      navigationOptions: {
+        tabBarLabel: "Select"
+      }
+    },
+    TakePhoto: {
+      screen: TakePhoto,
+      navigationOptions: {
+        tabBarLabel: "Take"
+      }
+    }
   },
   {
-    tabBarPosition: "bottom"
+    tabBarPosition: "bottom",
+    tabBarOptions: {
+      style: {
+        backgroundColor: theme.backgroundColor
+      },
+      labelStyle: {
+        fontWeight: "600",
+        paddingBottom: 30
+      },
+      activeTintColor: theme.blackColor,
+      inactiveTintColor: theme.darkGreyColor,
+      pressColor: theme.backgroundColor,
+      renderIndicator: () => null
+    }
   }
 );
 
 export default createStackNavigator(
   {
-    PhotoTabs,
+    PhotoTabs: {
+      screen: PhotoTabs,
+      navigationOptions: {
+        header: null
+      }
+    },
     UploadPhoto
   },
   {
