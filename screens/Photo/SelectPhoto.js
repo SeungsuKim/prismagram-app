@@ -1,17 +1,59 @@
-import React from "react";
+import * as MediaLibrary from "expo-media-library";
+import * as Permissions from "expo-permissions";
+import React, { useEffect, useState } from "react";
+import { Image, Text, View } from "react-native";
 import styled from "styled-components";
 
-const View = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-`;
+import Loader from "../../components/Loader";
+import constants from "../../constants";
 
-const Text = styled.Text``;
+export default () => {
+  const [loading, setLoading] = useState(true);
+  const [hasPermission, setHasPermission] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [allPhotos, setAllPhotos] = useState([]);
 
-export default () => (
-  <View>
-    <Text>Select Photo</Text>
-  </View>
-);
+  const askPermission = async () => {
+    try {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status === "granted") {
+        setHasPermission(true);
+        await getPhotos();
+      }
+    } catch (error) {
+      console.log(error);
+      hasPermission(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getPhotos = async () => {
+    try {
+      const { assets } = await MediaLibrary.getAssetsAsync();
+      const [firstPhoto, ...allPhotos] = assets;
+      setSelectedPhoto(firstPhoto);
+      setAllPhotos(allPhotos);
+      console.log(selectedPhoto);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    askPermission();
+  }, []);
+
+  return (
+    <View>
+      {loading ? (
+        <Loader />
+      ) : (
+        <Image
+          source={{ uri: selectedPhoto.uri }}
+          style={{ width: constants.width, height: constants.width }}
+        />
+      )}
+    </View>
+  );
+};
