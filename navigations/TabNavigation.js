@@ -31,9 +31,9 @@ const stackFactory = (initialRoute, customConfig) =>
       },
       UserDetail: {
         screen: UserDetail,
-        navigationOptions: {
-          title: "Profile"
-        }
+        navigationOptions: ({ navigation }) => ({
+          title: navigation.getParam("username")
+        })
       }
     },
     {
@@ -102,7 +102,11 @@ export default createBottomTabNavigator(
     },
     Profile: {
       screen: stackFactory(Profile, {
-        title: "Profile"
+        title: "Profile",
+        headerStyle: {
+          shadowColor: "transparent",
+          backgroundColor: theme.backgroundColor
+        }
       }),
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
